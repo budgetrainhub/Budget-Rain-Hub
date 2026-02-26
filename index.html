@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Rain Hub | Farm Rains With Us</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #030508;
+            --accent: #38bdf8;
+            --card-bg: rgba(255, 255, 255, 0.02);
+            --border: rgba(255, 255, 255, 0.07);
+            --text-main: #ffffff;
+            --text-dim: #64748b;
+        }
+
+        * { box-sizing: border-box; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* --- Atmospheric Blue Rain --- */
+        #rainContainer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .drop {
+            position: absolute;
+            background: linear-gradient(transparent, var(--accent));
+            width: 1px;
+            height: 100px;
+            top: -150px;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(120vh); }
+        }
+
+        /* --- Layout --- */
+        .wrapper {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 500px;
+            padding: 8vh 24px;
+            display: flex;
+            flex-direction: column;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        header { text-align: center; margin-bottom: 50px; }
+
+        .logo {
+            font-weight: 800;
+            font-size: clamp(2rem, 6vw, 2.6rem);
+            letter-spacing: -2px;
+            background: linear-gradient(to bottom, #fff 40%, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+        }
+
+        .subtitle {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            margin-top: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* --- Notifier Area --- */
+        .notifier-area {
+            text-align: center;
+            background: rgba(56, 189, 248, 0.03);
+            border: 1px solid rgba(56, 189, 248, 0.1);
+            padding: 30px 20px;
+            border-radius: 24px;
+            margin-bottom: 20px;
+        }
+
+        .live-tag {
+            color: var(--accent);
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .farm-text {
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin: 0 0 10px 0;
+            color: #fff;
+        }
+
+        .tracking-text {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .tg-button {
+            background: var(--text-main);
+            color: var(--bg);
+            text-decoration: none;
+            padding: 20px;
+            border-radius: 16px;
+            font-weight: 800;
+            text-align: center;
+            font-size: 0.95rem;
+            display: block;
+            letter-spacing: 0.5px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .tg-button:hover {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(56, 189, 248, 0.2);
+        }
+
+        /* --- Partner Grid --- */
+        .section-label {
+            color: var(--text-dim);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            margin: 40px 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-label::after { content: ""; height: 1px; background: var(--border); flex-grow: 1; }
+
+        .links-grid { display: flex; flex-direction: column; gap: 12px; }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            padding: 22px;
+            border-radius: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-main);
+        }
+
+        .card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--accent);
+            transform: translateX(8px);
+        }
+
+        .name-wrapper { display: flex; align-items: center; gap: 15px; }
+        .dot { width: 5px; height: 5px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 10px var(--accent); }
+        .brand { font-weight: 500; font-size: 1.05rem; }
+
+        footer {
+            margin-top: 60px;
+            text-align: center;
+            font-size: 0.65rem;
+            color: #334155;
+            letter-spacing: 2px;
+            padding-bottom: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="rainContainer"></div>
+
+    <div class="wrapper">
+        <header>
+            <h1 class="logo">BUDGET RAIN HUB</h1>
+        </header>
+
+        <div class="notifier-area">
+            <span class="live-tag">LIVE NOTIFIER</span>
+            <p class="farm-text">Farm rains with us.</p>
+            <p class="tracking-text">Automated tracking engine for instant alerts.</p>
+            <a href="https://t.me/BudgetRainHub" class="tg-button">
+                LAUNCH LIVE NOTIFIER ON TG
+            </a>
+        </div>
+
+        <div class="section-label">PARTNERED PLATFORMS</div>
+
+        <div class="links-grid">
+            <a href="https://bandit.camp/r/budget" class="card"><div class="name-wrapper"><div class="dot"></div><span class="brand">Bandit.camp</span></div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+            <a href="https://skinrave.gg/en?r=budget" class="card"><div class="name-wrapper"><div class="dot"></div><span class="brand">Skinrave</span></div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+            <a href="https://rustmagic.com/r/budget" class="card"><div class="name-wrapper"><div class="dot"></div><span class="brand">Rustmagic</span></div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+            <a href="https://juice.gg/r/budget" class="card"><div class="name-wrapper"><div class="dot"></div><span class="brand">Juice.gg</span></div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+            <a href="https://upgrader.com/r/BUDGET" class="card"><div class="name-wrapper"><div class="dot"></div><span class="brand">Upgrader</span></div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+            <a href="https://howl.gg/r/budget" class="card"><div class="name-wrapper"><div class="dot"></div><span class="brand">Howl.gg</span></div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+            <a href="https://chicken.gg/r/budget" class="card"><div class="name-wrapper"><div class="dot"></div><span class="brand">Chicken.gg</span></div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+            <a href="https://clash.gg/r/BUDGET." class="card"><div class="name-wrapper"><div class="dot"></div><span class="brand">Clash.gg</span></div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+            <a href="https://solpot.com/r/budget" class="card"><div class="name-wrapper"><div class="dot"></div><span class="brand">Solpot</span></div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+            <a href="https://rain.gg/r/budget." class="card"><div class="name-wrapper"><div class="dot"></div><span class="brand">Rain.gg</span></div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        </div>
+
+        <footer>
+            BUDGET RAIN HUB © 2026<br>
+            SECURE REWARD PROTOCOL
+        </footer>
+    </div>
+
+    <script>
+        function initRain() {
+            const container = document.getElementById('rainContainer');
+            const dropCount = 30;
+            for (let i = 0; i < dropCount; i++) {
+                const drop = document.createElement('div');
+                drop.classList.add('drop');
+                drop.style.left = Math.random() * 100 + 'vw';
+                drop.style.animationDuration = (Math.random() * 2 + 4) + 's';
+                drop.style.animationDelay = Math.random() * 5 + 's';
+                drop.style.opacity = Math.random() * 0.25;
+                container.appendChild(drop);
+            }
+        }
+        initRain();
+    </script>
+</body>
+</html>
